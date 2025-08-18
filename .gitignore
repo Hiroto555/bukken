@@ -1,0 +1,14 @@
+# macOS cruft
+.DS_Store
+
+# Logs and temp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+.env
+
+# Node deps (if ever added)
+node_modules/
+dist/
+build/
