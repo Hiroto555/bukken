@@ -2,28 +2,28 @@
 :root {
   /* Gallery sizing variables - Optimized for uniform layout */
   --psg-scale-factor: 0.6; /* Further reduced for better proportion */
-  --psg-mobile-height: 140px; /* Consistent mobile height */
+  --psg-mobile-height: 160px; /* Larger mobile height */
   --psg-grid-columns: 4; /* Number of columns for uniform grid */
-  --psg-aspect-ratio: 1.2; /* Slightly rectangular for better proportions */
+  --psg-aspect-ratio: 1; /* Taller tiles (square-ish) to enlarge area */
   
   /* Spacing variables - Minimal gaps */
-  --psg-gap-desktop: 6px; /* Minimal gaps between images */
-  --psg-gap-mobile: 4px; /* Even smaller gaps on mobile */
+  --psg-gap-desktop: 12px; /* Wider gutters between columns/rows */
+  --psg-gap-mobile: 8px; /* Wider gutters on mobile */
   --psg-margin-top: 10px; /* Reduced top margin */
   --psg-caption-padding: 8px; /* Consistent caption padding */
 }
 
 .property-semantic-gallery { 
   margin-top: var(--psg-margin-top); 
-  margin-bottom: 20px; /* Add bottom margin for section separation */
-  max-width: var(--page-max-width, 1120px); /* Match page container width */
+  margin-bottom: 20px; /* section separation */
+  max-width: var(--page-max-width, 1120px);
   margin-left: auto; 
   margin-right: auto; 
-  padding: 0 var(--content-padding, 2rem); /* Match layout-container padding */
-  background: #fafafa; /* Subtle background to define the section */
-  border-radius: 12px; /* Rounded corners for modern look */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* Subtle shadow for depth */
-  overflow: hidden; /* Ensure content fits within rounded corners */
+  padding: 0; /* remove inner horizontal padding to maximize width */
+  background: transparent; /* remove boxed look */
+  border-radius: 0; 
+  box-shadow: none; 
+  overflow: visible; 
 }
 .property-semantic-gallery .psg-header { 
   display: flex; 
@@ -31,8 +31,8 @@
   justify-content: space-between; 
   gap: 12px; 
   margin-bottom: 12px; 
-  padding: 16px 16px 0 16px; /* Add top and horizontal padding */
-  background: white; /* White background for header */
+  padding: 16px 0 0 0; /* follow outer padding; no inner left/right */
+  background: transparent; 
 }
 .property-semantic-gallery .psg-header h2 { 
   margin: 0; 
@@ -51,37 +51,31 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
 }
 
-/* Left-main + Right-vertical layout */
+/* 2列グリッドレイアウト（5つの画像を均等配置） */
 .property-semantic-gallery .psg-container { 
   display: grid; 
-  grid-template-columns: 1.6fr 1fr; /* Left main wider than right column */
+  grid-template-columns: repeat(4, 1fr); /* 4列グリッド */
   gap: var(--psg-gap-desktop); 
   align-items: start; 
-  padding: 0 16px 16px 16px; 
-  background: white; 
-  max-width: 900px; 
-  margin: 0 auto; 
+  padding: 0 0 16px 0; /* use outer padding */
+  background: transparent; 
+  width: 100%; /* 横幅を余白ギリギリまで */
+  max-width: none; 
+  margin: 0; 
 }
 .property-semantic-gallery .psg-figure { 
   position: relative; 
   background: #fff; 
-  border: 1px solid #e1e8ed; 
-  border-radius: 8px; 
+  border: none; /* remove border for edge-to-edge feel */
+  border-radius: 6px; 
   overflow: hidden; 
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08); 
+  box-shadow: none; 
   display: flex; 
   flex-direction: column; 
   min-width: 0; 
   transition: all 0.2s ease; 
 }
-.property-semantic-gallery .psg-figure--main { 
-  grid-row: 1 / -1; /* Span all rows */
-}
-.property-semantic-gallery .psg-right-column {
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--psg-gap-desktop);
-}
+/* 固定4列のため特別な並び替えは不要 */
 .property-semantic-gallery .psg-media { 
   position: relative; 
   width: 100%; 
@@ -96,31 +90,28 @@
   display: block; 
 }
 .property-semantic-gallery .psg-figcaption { 
-  position: absolute; 
-  left: 0; 
-  right: 0; 
-  bottom: 0; 
-  padding: var(--psg-caption-padding) 10px; 
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); 
-  color: #fff; 
+  position: static; 
+  padding: 8px 4px; 
+  background: transparent; 
+  color: var(--text-primary, #333); 
 }
 .property-semantic-gallery .psg-cap-title { 
   font-weight: 700; 
-  font-size: 14px; /* Improved size for readability */
-  color: #fff; 
-  margin: 0 0 4px; 
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* Enhanced text shadow */
-  letter-spacing: 0.3px; 
+  font-size: 14px; 
+  color: var(--text-strong, #222); 
+  margin: 0 0 2px; 
+  text-shadow: none; 
+  letter-spacing: 0.2px; 
   line-height: 1.3;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
 }
 .property-semantic-gallery .psg-cap-desc { 
   margin: 0; 
-  font-size: 12px; /* Better readable size */
-  color: #f0f0f0; /* Better contrast */
-  line-height: 1.4; 
+  font-size: 12px; 
+  color: var(--text-secondary, #666); 
+  line-height: 1.5; 
   display: -webkit-box; 
-  -webkit-line-clamp: 2; 
+  -webkit-line-clamp: 6; /* show longer descriptions */
   -webkit-box-orient: vertical; 
   overflow: hidden; 
   font-weight: 400; 
@@ -129,22 +120,15 @@
 }
 
 /* Hover/focus state for better affordance */
-.property-semantic-gallery .psg-figure:focus-within,
-.property-semantic-gallery .psg-figure:hover { 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12); /* Enhanced hover shadow */
-  border-color: #3498db; /* Blue accent on hover */
-  transform: translateY(-1px); /* Subtle lift effect */
-}
+/* Disable hover effects (keep focus-visible for accessibility) */
+.property-semantic-gallery .psg-figure:hover { box-shadow: none; transform: none; }
 .property-semantic-gallery .psg-media:focus-visible { outline: 2px solid #4a90e2; outline-offset: 2px; }
 
-/* Tablet tweaks - maintain left-main layout */
+/* Tablet tweaks - 2列グリッドを維持 */
 @media (max-width: 1024px) {
   .property-semantic-gallery .psg-container { 
-    grid-template-columns: 1.4fr 1fr; /* Slightly less difference on tablet */
+    grid-template-columns: 1fr 1fr; /* タブレットは2列 */
     gap: var(--psg-gap-desktop); 
-  }
-  .property-semantic-gallery .psg-figure--main { 
-    grid-row: 1 / -1; 
   }
 }
 
@@ -177,16 +161,6 @@
     scroll-snap-align: start; 
     width: calc(var(--psg-mobile-height) * var(--psg-aspect-ratio));
   }
-  .property-semantic-gallery .psg-figure--main { 
-    grid-column: unset; 
-    grid-row: unset; 
-    flex: 0 0 calc(var(--psg-mobile-height) * var(--psg-aspect-ratio) * 1.5); /* Slightly larger main image */
-    width: calc(var(--psg-mobile-height) * var(--psg-aspect-ratio) * 1.5);
-  }
-  .property-semantic-gallery .psg-right-column {
-    display: flex;
-    gap: var(--psg-gap-mobile);
-  }
   .property-semantic-gallery .psg-media {
     height: var(--psg-mobile-height);
     aspect-ratio: unset; /* Override aspect ratio for mobile */
@@ -196,23 +170,11 @@
 }
 
 /* Responsive padding adjustments - Match layout-container */
-@media (min-width: 640px) {
-  .property-semantic-gallery {
-    padding: 0 calc(var(--base-content-padding, 0.75rem) + var(--enhanced-horizontal-margin, 1rem));
-  }
-}
+@media (min-width: 640px) { .property-semantic-gallery { padding: 0; } }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .property-semantic-gallery {
-    padding: 0 calc(var(--base-content-padding, 1.5rem) + var(--enhanced-horizontal-margin, 1rem));
-  }
-}
+@media (min-width: 769px) and (max-width: 1024px) { .property-semantic-gallery { padding: 0; } }
 
-@media (min-width: 1025px) {
-  .property-semantic-gallery {
-    padding: 0 calc(var(--base-content-padding, 2.5rem) + var(--enhanced-horizontal-margin, 1rem));
-  }
-}
+@media (min-width: 1025px) { .property-semantic-gallery { padding: 0; } }
 
 @media (max-width: 480px) {
   :root {
@@ -220,10 +182,7 @@
     --psg-margin-top: 8px; 
   }
   
-  .property-semantic-gallery {
-    padding: 0 calc(var(--base-content-padding, 0.5rem) + var(--enhanced-horizontal-margin, 1rem)); 
-    margin-bottom: 12px; 
-  }
+  .property-semantic-gallery { padding: 0; margin-bottom: 12px; }
   
   .property-semantic-gallery .psg-header {
     padding: 10px 10px 0 10px; 
@@ -241,14 +200,5 @@
   .property-semantic-gallery .psg-figure { 
     flex: 0 0 calc(var(--psg-mobile-height) * var(--psg-aspect-ratio)); 
     width: calc(var(--psg-mobile-height) * var(--psg-aspect-ratio));
-  }
-  
-  .property-semantic-gallery .psg-figure--main { 
-    flex: 0 0 calc(var(--psg-mobile-height) * var(--psg-aspect-ratio) * 1.3); /* Slightly less difference on small screens */
-    width: calc(var(--psg-mobile-height) * var(--psg-aspect-ratio) * 1.3);
-  }
-  .property-semantic-gallery .psg-right-column {
-    display: flex;
-    gap: var(--psg-gap-mobile);
   }
 }

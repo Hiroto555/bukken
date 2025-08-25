@@ -19,12 +19,18 @@
     <style>
       /* SUUMO風のカスタムスタイル - 強化版 */
       :root {
-        --suumo-orange: #ff6200;
-        --suumo-orange-light: #ff8433;
-        --suumo-orange-dark: #e55600;
+        /* Blue palette for JP look */
+        --suumo-orange: #2b6cb0; /* repurposed as primary blue */
+        --suumo-orange-light: #3c7dc7;
+        --suumo-orange-dark: #1f5a99;
         --suumo-blue: #0066cc;
         --suumo-gray-bg: #f5f5f5;
         --suumo-border: #e0e0e0;
+        --jp-navy: #1f3a5f;
+        --jp-blue: #2b6cb0;
+        --jp-sky: #e8f2ff;
+        --jp-primary: var(--jp-blue); /* 主色は青系 */
+        --border-light: #e9eef5; /* すっきり系の薄い罫線色 */
         --page-max-width: 1120px;
         --base-content-padding: 1rem;
         --margin-enhancement-factor: 1;
@@ -37,8 +43,9 @@
         --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'メイリオ', Meiryo, sans-serif;
         --heading-weight: 700;
         --body-weight: 500;
-        --text-primary: #2c3e50;
-        --text-secondary: #7f8c8d;
+        --text-primary: #333333; /* 本文：濃いグレー */
+        --text-secondary: #666666; /* 補足：中間グレー */
+        --text-strong: #222222; /* 見出し：やや強め */
       }
 
       /* Global typography improvements */
@@ -46,8 +53,11 @@
         font-family: var(--primary-font);
         font-weight: var(--body-weight);
         color: var(--text-primary);
-        line-height: 1.6;
-        letter-spacing: 0.1px;
+        line-height: 1.7;
+        letter-spacing: 0; /* 日本語は字間を基本0に */
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-variant-numeric: tabular-nums;
       }
 
       /* ページコンテナの統一 */
@@ -83,70 +93,72 @@
       /* SUUMOスタイルのセクション */
       .suumo-section {
         background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        border-radius: 6px; /* 角丸控えめ */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06); /* 影控えめ */
         overflow: hidden;
         margin-bottom: 20px;
       }
 
       .suumo-section-header {
         background: linear-gradient(to bottom, #fff, #fafafa);
-        border-bottom: 3px solid var(--suumo-orange);
-        padding: 15px 20px;
+        border-bottom: 3px solid var(--jp-primary); /* 主色を緑に */
+        padding: 12px 16px; /* 余白やや詰める */
         display: flex;
         align-items: center;
         gap: 10px;
       }
 
       .suumo-section-title {
-        font-size: 20px;
+        font-size: 18px; /* 見出し控えめ */
         font-weight: var(--heading-weight);
-        color: var(--text-primary);
+        color: var(--text-strong);
         font-family: var(--primary-font);
         letter-spacing: 0.3px;
         line-height: 1.3;
       }
 
       .suumo-icon {
-        width: 26px;
-        height: 26px;
-        color: var(--suumo-orange);
+        width: 24px;
+        height: 24px;
+        color: var(--jp-primary);
       }
 
       /* テーブルスタイル - シームレス強化版 */
       .suumo-table-row {
         display: flex;
-        border-bottom: 1px solid var(--suumo-border);
-        min-height: 52px;
+        border-bottom: 1px solid var(--border-light);
+        min-height: 44px; /* 行高を上げて可読性UP */
         align-items: center;
         margin: 0;
       }
+      .suumo-table-compact .suumo-table-row:nth-child(odd){ background: transparent; }
+      .suumo-table-compact .suumo-table-row:hover{ background: #f7fbff; }
 
       .suumo-table-label {
-        width: 150px;
-        padding: 14px 22px;
-        background: #fafafa;
-        font-size: 15px;
-        color: var(--text-secondary);
+        width: 144px; /* ラベル幅を少し広げる */
+        padding: 12px 18px; /* 余白を増やす */
+        background: #ffffff; /* すっきり白基調 */
+        font-size: 15px; /* 文字大きめ */
+        color: var(--text-strong); /* 濃い文字色 */
         flex-shrink: 0;
-        border-right: 1px solid var(--suumo-border);
+        border-right: 1px solid var(--border-light);
         margin: 0;
         font-family: var(--primary-font);
-        font-weight: 600;
-        letter-spacing: 0.2px;
-        line-height: 1.4;
+        font-weight: 700; /* ラベル強調 */
+        letter-spacing: 0; /* 日本語は基本0 */
+        line-height: 1.6;
       }
 
       .suumo-table-value {
         flex: 1;
-        padding: 14px 22px;
-        font-size: 15px;
+        padding: 12px 18px; /* 余白を増やす */
+        font-size: 15px; /* 文字大きめ */
         color: var(--text-primary);
         margin: 0;
         font-family: var(--primary-font);
         font-weight: var(--body-weight);
-        line-height: 1.5;
-        letter-spacing: 0.1px;
+        line-height: 1.7; /* 行間を広げる */
+        letter-spacing: 0;
       }
 
       /* テーブルコンテナ - マージン完全除去 */
@@ -158,6 +170,18 @@
       .suumo-section-content {
         padding: 0;
         margin: 0;
+      }
+
+      /* 表内サブヘッダー（小見出し） */
+      .suumo-subhead {
+        grid-column: 1 / -1;
+        background: #f2f6fb;
+        border-top: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        color: var(--jp-navy);
+        font-weight: 700;
+        font-size: 13px;
+        padding: 8px 12px;
       }
 
       /* バッジスタイル */
@@ -256,17 +280,21 @@
 
         .suumo-table-label {
           width: 100%;
-          background: #f0f0f0;
-          padding: 8px 15px;
-          font-weight: bold;
+          background: #fff; /* ラベルも白でコントラスト明快に */
+          padding: 10px 16px;
+          font-weight: 700;
+          font-size: 15px;
           border-right: none;
-          border-bottom: 1px solid var(--suumo-border);
+          border-bottom: 1px solid var(--border-light);
           margin: 0;
+          color: var(--text-strong);
         }
 
         .suumo-table-value {
-          padding: 10px 15px;
+          padding: 10px 16px;
           margin: 0;
+          font-size: 15px; /* モバイルでも読みやすく */
+          line-height: 1.7;
         }
 
         .gallery-main img {
@@ -304,12 +332,14 @@
         }
         
         .suumo-table-label {
-          width: 120px;
-          font-size: 13px;
+          width: 136px;
+          font-size: 15px;
+          padding: 10px 16px;
         }
         
         .suumo-table-value {
-          font-size: 13px;
+          font-size: 15px;
+          padding: 10px 16px;
         }
         
         .suumo-section-title {
@@ -320,7 +350,7 @@
       /* デスクトップ最適化 */
       @media (min-width: 1025px) {
         .suumo-table-label {
-          width: 160px;
+          width: 144px;
         }
         
         .suumo-section {
@@ -332,7 +362,7 @@
       /* Navigation tabs styling */
       .property-nav-tabs {
         display: flex;
-        border-bottom: 3px solid #6BAF42;
+        border-bottom: 3px solid var(--jp-primary);
         background: white;
         border-radius: 8px 8px 0 0;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -353,7 +383,7 @@
       }
       
       .nav-tab.active {
-        background: #6BAF42;
+        background: var(--jp-primary);
         color: white;
         font-weight: 600;
       }
@@ -367,11 +397,11 @@
       
       .nav-tab.inactive:hover {
         background: #f8f9fa;
-        color: #6BAF42;
+        color: var(--jp-primary);
       }
       
       .nav-tab.special {
-        background: #5a9538;
+        background: var(--jp-navy);
         color: white;
         font-weight: 600;
         border-radius: 0 6px 0 0;
@@ -497,10 +527,8 @@
         border-color: #b8d9f5;
       }
 
-      a[href]:hover {
-        opacity: 0.8;
-        transition: opacity 0.2s;
-      }
+      a[href]:not(.jp-btn){ color: var(--jp-primary); }
+      a[href]:not(.jp-btn):hover { color: var(--jp-navy); text-decoration: underline; transition: color 0.2s; }
 
       /* ボタンスタイル */
       .btn-primary {
@@ -536,9 +564,12 @@
         background: #555;
       }
 
+      /* Map embed responsive wrapper */
+      .map-embed { width: 100%; aspect-ratio: 16/9; max-width: 800px; margin: 0 auto; }
+
       /* Swiperテーマ変数（SUUMOカラー適用） */
       :root {
-        --swiper-theme-color: var(--suumo-orange);
+        --swiper-theme-color: var(--jp-primary);
         --swiper-navigation-size: 22px;
       }
 
@@ -548,7 +579,7 @@
         width: 100%;
         height: 160px;
         object-fit: cover;
-        border-radius: 8px;
+        border-radius: 6px;
       }
       @media (min-width: 640px) {
         .suumo-photo-swiper .swiper-slide img { height: 192px; }
@@ -565,7 +596,7 @@
         height: 36px;
         border-radius: 9999px;
         background: rgba(255,255,255,0.95);
-        color: var(--suumo-orange);
+        color: var(--jp-primary);
         box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         border: 1px solid var(--suumo-border);
       }
@@ -578,7 +609,7 @@
         opacity: 1;
       }
       .suumo-photo-swiper .swiper-pagination-bullet-active {
-        background: var(--suumo-orange);
+        background: var(--jp-primary);
       }
 
       /* SUUMO: Split main + thumbs gallery layout */
@@ -591,7 +622,7 @@
       .suumo-photo-main-swiper {
         width: 100%;
         background: #000;
-        border-radius: 8px;
+        border-radius: 6px;
         overflow: hidden;
         position: relative;
       }
@@ -777,7 +808,7 @@
 
       /* SUUMO実際のUIスタイル */
       .property-highlight-header {
-        background: #6BAF42;
+        background: var(--jp-navy);
         color: white;
         padding: 12px 0;
         margin-bottom: 20px;
@@ -997,13 +1028,13 @@
       
       .suumo-compact .suumo-table-label,
       .suumo-compact .suumo-table-value { 
-        padding: 8px 16px; 
-        font-size: 13px; 
+        padding: 10px 16px; 
+        font-size: 15px; 
         margin: 0;
       }
       
       .suumo-compact .suumo-table-label {
-        border-right: 1px solid var(--suumo-border);
+        border-right: 1px solid var(--border-light);
       }
       
       @media (max-width: 768px) { 
@@ -1015,7 +1046,7 @@
         
         .suumo-compact .suumo-table-label {
           border-right: none;
-          border-bottom: 1px solid var(--suumo-border);
+          border-bottom: 1px solid var(--border-light);
         }
       }
 
@@ -1046,6 +1077,7 @@
         display: grid;
         grid-template-columns: 1fr; /* モバイルは1カラム */
       }
+      
       @media (min-width: 768px) {
         .suumo-table-2cols {
           grid-template-columns: 1fr 1fr; /* デスクトップは2カラム */
@@ -1053,7 +1085,7 @@
         }
         /* 右カラムに縦の区切り線を表示 */
         .suumo-table-2cols .suumo-table-row:nth-child(2n) {
-          border-left: 1px solid var(--suumo-border);
+          border-left: 1px solid var(--border-light);
         }
         /* 最終行の下線を左右ともに消す */
         .suumo-table-2cols .suumo-table-row:nth-last-child(1),
@@ -1081,40 +1113,53 @@
       <!-- 写真ギャラリー（SUUMO風・マルチスライド） -->
       <section class="bg-white">
         <div class="layout-container py-6">
-          <!-- 物件名・価格・CTAセクション統合 -->
+          <!-- 物件名・価格・CTAセクション統合（日本向け） -->
           <div style="padding: 20px 0; border-bottom: 2px solid #e0e0e0; margin-bottom: 20px;">
-            <!-- 上段を左右2カラム（折り返し） -->
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap;">
-              <!-- 左：物件名＋価格（価格を物件名の下へ） -->
-              <div style="flex: 1 1 520px; min-width: 280px;">
-                <h1 style="font-size: 28px; font-weight: 700; margin: 0; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; line-height: 1.3; letter-spacing: 0.2px;">大字頓野（感田駅）　5LDK　中古一戸建て</h1>
-                <div style="font-size: 42px; font-weight: 800; color: #e74c3c; margin-top: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; letter-spacing: -0.5px; line-height: 1.1;">2,248万円</div>
-                <p style="color: #7f8c8d; margin-top: 8px; font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 500; line-height: 1.4;">福岡県直方市　筑豊電気鉄道「感田」歩53分</p>
-                <p style="color: #7f8c8d; font-size: 14px; margin-top: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 500; line-height: 1.4;">建物面積: 113.44㎡ / 土地面積: 268.62㎡</p>
+            <style>
+              .jp-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
+              .jp-summary-item{background:var(--jp-sky);border:1px solid #dbe7ff;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.4}
+              .jp-summary-item .label{color:#666;font-size:12px}
+              .jp-summary-item .value{font-weight:700;color:var(--text-primary);margin-top:2px;font-size:14px}
+              .jp-meta{color:#666;font-size:12px;margin-top:6px}
+              .jp-cta{max-width:360px;width:100%;position:sticky;top:80px}
+              .jp-btn{display:block;width:100%;padding:12px;border-radius:6px;font-weight:700;text-align:center;text-decoration:none;font-size:16px;line-height:1.2;letter-spacing:0}
+              .jp-btn+.jp-btn{margin-top:8px}
+              .jp-btn-primary{background:var(--jp-primary);color:#fff;border:1px solid #1f5a99}
+              .jp-btn-accent{background:var(--jp-navy);color:#fff;border:1px solid #142843}
+              .jp-btn-outline{background:#fff;color:var(--jp-primary);border:2px solid var(--jp-primary)}
+              .jp-btn-primary:hover{background:#1f5a99}
+              .jp-btn-accent:hover{background:#153153}
+              .jp-btn-outline:hover{background:var(--jp-primary);color:#fff}
+              .jp-loan{background:#fff;border:2px solid var(--jp-primary);padding:8px;border-radius:6px;margin-top:10px;box-shadow:0 1px 3px rgba(43,108,176,.12)}
+              .jp-loan h3{font-size:13px;font-weight:700;color:var(--jp-primary);margin:0 0 6px}
+              .jp-loan .amt{font-size:18px;font-weight:800;color:var(--text-strong);margin:0 0 4px}
+              .jp-loan p{color:var(--text-secondary);font-size:11px;margin:2px 0 0;line-height:1.5}
+            </style>
+            <div style="display:flex;gap:24px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;">
+              <!-- 左：物件名・価格・サマリー -->
+              <div style="flex:1 1 560px;min-width:300px;">
+                <h1 style="font-size:24px;font-weight:700;margin:0;color:#222;line-height:1.35;letter-spacing:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif">大字頓野（感田駅）　5LDK　中古一戸建て</h1>
+                <div style="font-size:34px;font-weight:800;color:#e74c3c;margin-top:6px;letter-spacing:-.2px;line-height:1.1;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif">2,248万円</div>
+                <p style="color:#666;margin-top:6px;font-size:14px;font-weight:500;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif">福岡県直方市　筑豊電気鉄道「感田」歩53分</p>
+                <p class="jp-meta">公開日: 2024/08/24　更新日: 2024/08/25　物件番号: 12345</p>
+                <div class="jp-summary-grid">
+                  <div class="jp-summary-item"><div class="label">間取り</div><div class="value">5LDK</div></div>
+                  <div class="jp-summary-item"><div class="label">建物面積</div><div class="value">113.44㎡</div></div>
+                  <div class="jp-summary-item"><div class="label">土地面積</div><div class="value">268.62㎡</div></div>
+                  <div class="jp-summary-item"><div class="label">築年数</div><div class="value">新築</div></div>
+                  <div class="jp-summary-item"><div class="label">交通</div><div class="value">感田 徒歩53分</div></div>
+                </div>
               </div>
-
-              <!-- 右：支払い・資料・その場で・電話（右へ配置） -->
-              <div style="flex: 1 1 360px; max-width: 400px; width: 100%; margin-left: auto;">
-                <div style="background: white; border: 2px solid #FF8A00; padding: 8px; border-radius: 4px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(255, 138, 0, 0.1);">
-                  <h3 style="font-size: 14px; font-weight: 700; color: #FF8A00; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; letter-spacing: 0.2px;">月々のお支払い例</h3>
-                  <div style="font-size: 20px; font-weight: 800; color: #2c3e50; margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; letter-spacing: -0.2px; line-height: 1.2;">月々 92,985円</div>
-                  <p style="color: #7f8c8d; font-size: 11px; margin-top: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 500; line-height: 1.4;">西日本シティ銀行　0.725％　5.0年<br>
-                    ボーナス支払い 10万円</p>
-                </div>
-
-                <div class="property-cta-buttons" style="margin-bottom: 0; gap: 8px;">
-                  <a href="../contact.html" class="cta-button-orange" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 600; letter-spacing: 0.1px; padding: 8px 16px; font-size: 13px;">資料請求する(無料)</a>
-                  <a href="../contact.html" class="cta-button-pink" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 600; letter-spacing: 0.1px; padding: 8px 16px; font-size: 13px;">
-                    その場で簡単<br>
-                    <span style="font-size: 10px; font-weight: 500;">見学予約する(無料)</span>
-                  </a>
-                </div>
-
-                <div style="text-align: center; margin-top: 8px;">
-                  <p style="color: #e74c3c; font-weight: 700; font-size: 30px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; letter-spacing: 0.3px; margin-bottom: 2px;">
-                    TEL: 092-985-8111
-                  </p>
-                  <p style="color: #7f8c8d; font-size: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif; font-weight: 500;">「SUUMOを見た」とお伝えください</p>
+              <!-- 右：CTA縦積み -->
+              <div class="jp-cta" style="flex:1 1 320px;margin-left:auto;min-width:280px;">
+                <a href="../contact.html" class="jp-btn jp-btn-accent">資料請求（無料）</a>
+                <a href="../contact.html" class="jp-btn jp-btn-primary">見学予約（無料）</a>
+                <a href="tel:092-985-8111" class="jp-btn jp-btn-outline">電話でお問い合わせ</a>
+                <p style="margin-top:6px;color:#666;font-size:12px;line-height:1.5">受付時間 10:00〜19:00／定休日 火・水<br>お問い合わせの際は「サイトを見た」とお伝えください。</p>
+                <div class="jp-loan">
+                  <h3>月々のお支払い例</h3>
+                  <div class="amt">月々 92,985円</div>
+                  <p>西日本シティ銀行　0.725％　5.0年<br>ボーナス支払い 10万円</p>
                 </div>
               </div>
             </div>
@@ -1150,15 +1195,15 @@
             <div style="background: transparent; padding: 0; margin: 0;">
               <div style="margin-bottom: 8px;">
                 <div style="display: flex; align-items: center; margin-bottom: 6px;">
-                  <div style="width: 4px; height: 20px; background: #6BAF42; margin-right: 10px; border-radius: 2px;"></div>
-                  <h2 style="font-size: 19px; font-weight: 700; color: #2c3e50; margin: 0; font-family: var(--primary-font); letter-spacing: 0.2px;">物件の特徴</h2>
+                  <div style="width: 4px; height: 20px; background: var(--jp-primary); margin-right: 10px; border-radius: 2px;"></div>
+                  <h2 style="font-size: 19px; font-weight: 700; color: #222; margin: 0; font-family: var(--primary-font); letter-spacing: 0.1px;">物件の特徴</h2>
                 </div>
               </div>
               
               <div style="padding: 0; margin: 0;">
                 <div style="margin-bottom: 8px;">
-                  <h3 style="font-size: 17px; font-weight: 700; color: #2c3e50; margin-bottom: 6px; font-family: var(--primary-font); line-height: 1.3;">◆売主◆<br>おまとめローン可能！</h3>
-                  <div style="color: #2c3e50; font-size: 14px; line-height: 1.6; margin-bottom: 6px; font-family: var(--primary-font);">
+                  <h3 style="font-size: 17px; font-weight: 700; color: #222; margin-bottom: 6px; font-family: var(--primary-font); line-height: 1.4;">◆売主◆<br>おまとめローン可能！</h3>
+                  <div style="color: #333; font-size: 14px; line-height: 1.7; margin-bottom: 6px; font-family: var(--primary-font);">
                     <p style="margin-bottom: 4px;">○お借り入れがある方、ご年収が低い方も○<br>
                     本日のご内覧、住宅ローンのみのご相談等も大歓迎です♪<br>
                     他社ローンありでもおまとめ可能！</p>
@@ -1168,17 +1213,17 @@
                 </div>
                 
                 <div style="margin-bottom: 8px;">
-                  <p style="color: #2c3e50; font-size: 14px; line-height: 1.6; margin-bottom: 6px; font-family: var(--primary-font);">ゆめハウスは、複雑な住宅ローンについてわかりやすく説明し、あなたに合ったご提案をします！物件の内覧はもちろんローンのご相談のみでもお気軽にお問い合わせください♪</p>
+                  <p style="color: #333; font-size: 14px; line-height: 1.7; margin-bottom: 6px; font-family: var(--primary-font);">ゆめハウスは、複雑な住宅ローンについてわかりやすく説明し、あなたに合ったご提案をします！物件の内覧はもちろんローンのご相談のみでもお気軽にお問い合わせください♪</p>
                 </div>
                 
                 <div style="padding-top: 8px; border-top: 1px solid #f0f0f0;">
-                  <h4 style="font-size: 15px; font-weight: 700; color: #2c3e50; margin-bottom: 6px; font-family: var(--primary-font);">
+                  <h4 style="font-size: 15px; font-weight: 700; color: #222; margin-bottom: 6px; font-family: var(--primary-font);">
 物件ポイント/</h4>
                   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 6px; margin-bottom: 8px;">
-                    <div style="color: #2c3e50; font-size: 14px; line-height: 1.4; font-family: var(--primary-font);">☆400万円相当のインナーガレージ付き！</div>
-                    <div style="color: #2c3e50; font-size: 14px; line-height: 1.4; font-family: var(--primary-font);">☆200万円相当のカーポート付き！</div>
-                    <div style="color: #2c3e50; font-size: 14px; line-height: 1.4; font-family: var(--primary-font);">☆リビング18帖！</div>
-                    <div style="color: #2c3e50; font-size: 14px; line-height: 1.4; font-family: var(--primary-font);">☆上熊野小学校学校エリア</div>
+                    <div style="color: #333; font-size: 14px; line-height: 1.6; font-family: var(--primary-font);">☆400万円相当のインナーガレージ付き！</div>
+                    <div style="color: #333; font-size: 14px; line-height: 1.6; font-family: var(--primary-font);">☆200万円相当のカーポート付き！</div>
+                    <div style="color: #333; font-size: 14px; line-height: 1.6; font-family: var(--primary-font);">☆リビング18帖！</div>
+                    <div style="color: #333; font-size: 14px; line-height: 1.6; font-family: var(--primary-font);">☆上熊野小学校学校エリア</div>
                   </div>
                 </div>
                 
@@ -1436,6 +1481,13 @@
         <div class="grid lg:grid-cols-3 gap-4">
           <!-- メインカラム -->
           <div class="lg:col-span-2 space-y-4">
+            <!-- お知らせ（日本向け定型注記） -->
+            <section class="suumo-section" style="padding:12px 16px; border-left:4px solid var(--jp-primary);">
+              <p style="margin:0; color:#555; font-size:12px; line-height:1.7">
+                ※ 図面と現況が異なる場合は現況を優先します。価格・設備等は予告なく変更となる場合があります。<br>
+                ※ 掲載の返済例は概算です。実際の金利・諸条件により異なります。詳細は担当までお問い合わせください。
+              </p>
+            </section>
             <!-- 交通アクセス（SUUMO風） -->
             <div class="suumo-section">
               <div class="suumo-section-header">
@@ -1457,14 +1509,31 @@
                   <div class="suumo-table-label">産交バス「保田窪」</div>
                   <div class="suumo-table-value">徒歩4分</div>
                 </div>
-              </div>
             </div>
+          </div>
 
-            <!-- 基本情報 -->
-            <div id="secBasicInfo" class="suumo-section suumo-compact">
+            <!-- 地図・周辺環境 -->
+            <section class="suumo-section">
               <div class="suumo-section-header">
-                <span class="suumo-section-title">基本情報</span>
+                <span class="suumo-section-title">地図・周辺環境</span>
               </div>
+              <div class="p-0">
+                <div class="map-embed">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6647.278497686062!2d130.3883773757461!3d33.588714673335005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354191914306e2a3%3A0xa73303b04fb67d98!2z44KG44KB44OP44Km44K556aP5bKh5bqX!5e0!3m2!1sen!2sjp!4v1756099009954!5m2!1sen!2sjp"
+                          style="border:0; width:100%; height:100%;"
+                          allowfullscreen
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                          title="地図"></iframe>
+                </div>
+              </div>
+            </section>
+
+          <!-- 基本情報 -->
+          <div id="secBasicInfo" class="suumo-section suumo-compact">
+            <div class="suumo-section-header">
+              <span class="suumo-section-title">基本情報</span>
+            </div>
               <div class="p-0 suumo-table-2cols suumo-table-compact">
                 <div class="suumo-table-row"><div class="suumo-table-label">所在地</div><div class="suumo-table-value">熊本県熊本市東区保田窪</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">物件名</div><div class="suumo-table-value">熊本市東区・新築戸建（デモ）</div></div>
@@ -1479,11 +1548,16 @@
                 <span class="suumo-section-title">価格・費用</span>
               </div>
               <div class="p-0 suumo-centered suumo-table-2cols suumo-table-compact">
+                <div class="suumo-subhead">価格</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">価格</div><div class="suumo-table-value">3,980万円</div></div>
+
+                <div class="suumo-subhead">維持費等</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">町会費など</div><div class="suumo-table-value">町内会費 300円/月</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">有線放送費</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">インターネット費</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">CATV費</div><div class="suumo-table-value">無</div></div>
+
+                <div class="suumo-subhead">その他</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">温泉</div><div class="suumo-table-value">未選択</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">その他費用</div><div class="suumo-table-value">自治会入会金 2,000円（初回）</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">取引にかかる費用</div><div class="suumo-table-value">仲介手数料、登記費用等</div></div>
@@ -1496,17 +1570,24 @@
                 <span class="suumo-section-title">土地情報</span>
               </div>
               <div class="p-0 suumo-centered suumo-table-2cols suumo-table-compact">
+                <div class="suumo-subhead">面積・道路</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">土地面積</div><div class="suumo-table-value">150.25㎡（登記）</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">前面道路</div><div class="suumo-table-value">北 6.0m / 西 4.0m</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">セットバック</div><div class="suumo-table-value">不要</div></div>
+
+                <div class="suumo-subhead">用途・法令</div>
+                <div class="suumo-table-row"><div class="suumo-table-label">用途地域</div><div class="suumo-table-value">第一種低層住居専用地域</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">建ぺい率</div><div class="suumo-table-value">60%</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">容積率</div><div class="suumo-table-value">200%</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">私道負担</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">地役権</div><div class="suumo-table-value">無</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">前面道路</div><div class="suumo-table-value">北 6.0m / 西 4.0m</div></div>
+
+                <div class="suumo-subhead">インフラ</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">上水道</div><div class="suumo-table-value">公営水道</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">下水道</div><div class="suumo-table-value">本下水</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">ガス</div><div class="suumo-table-value">都市ガス</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">セットバック</div><div class="suumo-table-value">不要</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">用途地域</div><div class="suumo-table-value">第一種低層住居専用地域</div></div>
+
+                <div class="suumo-subhead">その他</div>
+                <div class="suumo-table-row"><div class="suumo-table-label">私道負担</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">建築確認番号</div><div class="suumo-table-value">第2024-12345号</div></div>
               </div>
             </div>
@@ -1517,26 +1598,33 @@
                 <span class="suumo-section-title">建物情報</span>
               </div>
               <div class="p-0 suumo-centered suumo-table-2cols suumo-table-compact">
+                <div class="suumo-subhead">面積・間取り・駐車</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">建物面積</div><div class="suumo-table-value">95.20㎡（登記）</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">うち地下室</div><div class="suumo-table-value">0.00㎡</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">うち1F車庫</div><div class="suumo-table-value">0.00㎡</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">うち地下車庫</div><div class="suumo-table-value">0.00㎡</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">居住用途以外</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">間取り</div><div class="suumo-table-value">3LDK</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">建物階建て</div><div class="suumo-table-value">地上2階 地下0階</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">駐車場</div><div class="suumo-table-value">2台可（カースペース）</div></div>
+
+                <div class="suumo-subhead">状態・時期</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">総戸数</div><div class="suumo-table-value">1戸</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">完成時期</div><div class="suumo-table-value">2024年10月</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">建物状況</div><div class="suumo-table-value">新築</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">引渡可能時期</div><div class="suumo-table-value">即引渡可</div></div>
+
+                <div class="suumo-subhead">構造・性能</div>
                 <div class="suumo-table-row"><div class="suumo-table-label">主要構造</div><div class="suumo-table-value">木造</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">一部構造</div><div class="suumo-table-value">無し</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">工法</div><div class="suumo-table-value">在来軸組工法</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">建物階建て</div><div class="suumo-table-value">地上2階 地下0階</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">駐車場</div><div class="suumo-table-value">2台可（カースペース）</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">施工会社</div><div class="suumo-table-value">株式会社〇〇ホーム</div></div>
-                <div class="suumo-table-row"><div class="suumo-table-label">建築確認番号</div><div class="suumo-table-value">第2024-12345号</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">エネルギー消費性能</div><div class="suumo-table-value">等級6（認定予定）</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">断熱性能</div><div class="suumo-table-value">等級6</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">目安光熱費</div><div class="suumo-table-value">12〜18万円/年</div></div>
+
+                <div class="suumo-subhead">その他</div>
+                <div class="suumo-table-row"><div class="suumo-table-label">施工会社</div><div class="suumo-table-value">株式会社〇〇ホーム</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">建築確認番号</div><div class="suumo-table-value">第2024-12345号</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">うち地下室</div><div class="suumo-table-value">0.00㎡</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">うち1F車庫</div><div class="suumo-table-value">0.00㎡</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">うち地下車庫</div><div class="suumo-table-value">0.00㎡</div></div>
+                <div class="suumo-table-row"><div class="suumo-table-label">居住用途以外</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">外装</div><div class="suumo-table-value">無</div></div>
                 <div class="suumo-table-row"><div class="suumo-table-label">内装（リフォーム）</div><div class="suumo-table-value">無</div></div>
               </div>
@@ -1617,7 +1705,7 @@
 
           <!-- サイドカラム -->
           <aside id="tabSidebar" class="lg:col-span-1 space-y-6">
-            <div class="bg-white rounded-xl shadow p-6">
+            <div class="bg-white rounded-xl shadow p-6" style="border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
               <div class="text-gray-700 space-y-2">
                 <div class="flex justify-between"><span>価格</span><span class="text-red-600 font-bold">3,980万円</span></div>
                 <div class="flex justify-between"><span>所在地</span><span>熊本市東区保田窪</span></div>
@@ -1625,13 +1713,13 @@
                 <div class="flex justify-between"><span>建物面積</span><span>95.20㎡</span></div>
                 <div class="flex justify-between"><span>土地面積</span><span>150.25㎡</span></div>
               </div>
-              <a href="../contact.html" class="mt-4 block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">この物件に問い合わせる</a>
+              <a href="../contact.html" class="mt-4 block text-center text-white font-bold py-2 px-4" style="background:var(--jp-primary); border-radius:6px;">この物件に問い合わせる</a>
             </div>
-            <div class="bg-white rounded-xl shadow p-6">
+            <div class="bg-white rounded-xl shadow p-6" style="border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
               <h3 class="font-bold text-blue-900 mb-3">担当者コメント</h3>
               <p class="text-gray-800 text-sm leading-7">日当たりと通風、収納量にこだわったプランです。周辺環境も良好で、子育てにぴったりの立地。ぜひ現地でご体感ください。</p>
             </div>
-            <div class="bg-white rounded-xl shadow p-6">
+            <div class="bg-white rounded-xl shadow p-6" style="border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
               <h3 class="font-bold text-blue-900 mb-3">関連リンク</h3>
               <ul class="text-blue-700 underline text-sm space-y-2">
                 <li><a href="#">建築会社の紹介ページ</a></li>
@@ -1653,43 +1741,45 @@
         </div>
         <div class="flex gap-2">
           <a href="tel:096-383-2001" class="px-4 py-2 rounded border font-bold">電話</a>
-          <a href="../contact.html" class="px-4 py-2 rounded bg-blue-600 text-white font-bold">問い合わせ</a>
+          <a href="../contact.html" class="px-4 py-2 rounded text-white font-bold" style="background:var(--jp-primary);">問い合わせ</a>
         </div>
       </div>
     </div>
-
-    <!-- デスクトップ用 右下固定CTA（既存は保持） -->
-    <style>
-      .floating-cta { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
-      .floating-cta a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--primary-font); font-weight: 700; color: #333; transition: transform .15s ease, opacity .15s ease; }
-      .floating-cta a:hover { transform: translateY(-1px); opacity: 0.95; }
-      .floating-cta .btn-circle { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.16); border: 1px solid #e0e0e0; }
-      .floating-cta .btn-circle svg { width: 30px; height: 30px; display: block; fill: currentColor; }
-      .floating-cta .btn-label { font-size: 14px; letter-spacing: 0.2px; }
-      .floating-cta a.contact .btn-circle { background: #FF8A00; color: #fff; border-color: #FF8A00; }
-      .floating-cta a.phone .btn-circle { background: #ffffff; color: #e74c3c; }
-      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 1px, 1px); white-space: nowrap; border: 0; }
-      @media (max-width: 768px) { .floating-cta { display: none; } }
-    </style>
-    <div class="floating-cta" role="region" aria-label="固定お問い合わせ">
-      <a href="../contact.html" class="contact" title="お問い合わせ">
-        <span class="sr-only">お問い合わせする</span>
-        <span class="btn-circle" aria-hidden="true">
-          <!-- メール/問い合わせアイコン -->
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4.99-8 5-8-5V6l8 5 8-5v2.99Z"/></svg>
-        </span>
-        <span class="btn-label">お問い合わせ</span>
-      </a>
-      <a href="tel:092-985-8111" class="phone" title="電話">
-        <span class="sr-only">電話する</span>
-        <span class="btn-circle" aria-hidden="true">
-          <!-- 電話アイコン -->
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2Z"/></svg>
-        </span>
-        <span class="btn-label">電話</span>
-      </a>
-    </div>
   </body>
+  
+  <!-- デスクトップ用 右下固定CTA（お問い合わせ・電話） -->
+  <style>
+    .floating-cta { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+    .floating-cta a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--primary-font); font-weight: 700; color: #333; transition: transform .15s ease, opacity .15s ease; }
+    .floating-cta a:hover { transform: translateY(-1px); opacity: 0.95; }
+    .floating-cta .btn-circle { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.16); border: 1px solid #e0e0e0; }
+    .floating-cta .btn-circle svg { width: 30px; height: 30px; display: block; fill: currentColor; }
+    .floating-cta .btn-label { font-size: 14px; letter-spacing: 0.2px; }
+    /* 色を変更（オレンジアクセント） */
+    .floating-cta a.contact .btn-circle { background: #FF8A00; color: #fff; border-color: #FF8A00; }
+    .floating-cta a.phone .btn-circle { background: #ffffff; color: #FF8A00; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 1px, 1px); white-space: nowrap; border: 0; }
+    @media (max-width: 768px) { .floating-cta { display: none; } }
+  </style>
+  <div class="floating-cta" role="region" aria-label="固定お問い合わせ">
+    <a href="../contact.html" class="contact" title="お問い合わせ">
+      <span class="sr-only">お問い合わせする</span>
+      <span class="btn-circle" aria-hidden="true">
+        <!-- メール/問い合わせアイコン -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4.99-8 5-8-5V6l8 5 8-5v2.99Z"/></svg>
+      </span>
+      <span class="btn-label">お問い合わせ</span>
+    </a>
+    <a href="tel:092-985-8111" class="phone" title="電話">
+      <span class="sr-only">電話する</span>
+      <span class="btn-circle" aria-hidden="true">
+        <!-- 電話アイコン -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2Z"/></svg>
+      </span>
+      <span class="btn-label">電話</span>
+    </a>
+  </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
