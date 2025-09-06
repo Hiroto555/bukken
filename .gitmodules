@@ -1,0 +1,5 @@
+[submodule "bukken2"]
+	path = bukken2
+	url = https://github.com/Hiroto555/bukken2.git
+	branch = main
+
